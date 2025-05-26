@@ -23,10 +23,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Install Railway CLI
-        run: npm install -g @railway/cli
+        run: npm install -g railway
       - name: Railway Login
         run: railway login --token ${{ secrets.RAILWAY_TOKEN }}
       - name: Link Railway Project
         run: railway link ${{ secrets.RAILWAY_PROJECT }}
       - name: Deploy to Railway
         run: railway up
+
