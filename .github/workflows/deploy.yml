@@ -34,11 +34,16 @@ jobs:
     runs-on: ubuntu-latest
     env:
       RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+      RAILWAY_SERVICE_ID: ${{ secrets.RAILWAY_SERVICE_ID }}
+      RAILWAY_PROJECT: ${{ secrets.RAILWAY_PROJECT }} # Este también lo necesitas
     steps:
       - uses: actions/checkout@v3
 
       - name: Install Railway CLI
         run: npm install -g @railway/cli@3.14.0
 
+      - name: Link Railway Project
+        run: railway link $RAILWAY_PROJECT
+
       - name: Deploy to Railway
-        run: railway up --service reservas --detach
+        run: railway up --service $RAILWAY_SERVICE_ID --detach
