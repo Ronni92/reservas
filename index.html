@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ReservaPlus</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.3/dist/tailwind.min.css" rel="stylesheet">
+  </head>
+  <body class="body">
+    <div class="container">
+      <div class="header">
+        <svg class="icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+        </svg>
+        <h1 class="title">
+          <span class="highlight">Reserva</span><span class="subtitle">Plus</span>
+        </h1>
+        <p class="description">Gestión inteligente de citas</p>
+      </div>
+
+      <form class="form">
+        <input placeholder="Nombre del cliente" class="input" />
+        <input type="date" class="input" />
+        <input type="time" class="input" />
+        <button type="button" class="button">
+          ➕ Crear Reserva
+        </button>
+      </form>
+
+      <div class="reservations">
+        <h2 class="reservations-title">📋 Reservas Registradas</h2>
+        <p class="reservations-empty">No hay reservas registradas.</p>
+      </div>
+    </div>
+  </body>
+</html>
