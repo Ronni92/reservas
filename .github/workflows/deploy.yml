@@ -27,7 +27,7 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/reservaplus:latest
 
-   railway:
+  railway:
     name: Deploy to Railway
     needs: dockerhub
     runs-on: ubuntu-latest
