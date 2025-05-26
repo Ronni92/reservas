@@ -32,9 +32,7 @@ jobs:
     needs: dockerhub
     runs-on: ubuntu-latest
     env:
-      RAILWAY_TOKEN:      ${{ secrets.RAILWAY_TOKEN }}
-      RAILWAY_PROJECT:    ${{ secrets.RAILWAY_PROJECT }}
-      RAILWAY_SERVICE_ID: ${{ secrets.RAILWAY_SERVICE_ID }}
+      RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
     steps:
       - uses: actions/checkout@v3
 
@@ -43,4 +41,4 @@ jobs:
 
       - name: Deploy to Railway
         run: |
-          railway up -- --project $RAILWAY_PROJECT --service $RAILWAY_SERVICE_ID --detach
+          railway up --detach
