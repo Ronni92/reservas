@@ -33,8 +33,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       RAILWAY_TOKEN:      ${{ secrets.RAILWAY_TOKEN }}
-      RAILWAY_PROJECT:    ${{ secrets.RAILWAY_PROJECT }}    # p.ej. project_abcd1234
-      RAILWAY_SERVICE_ID: ${{ secrets.RAILWAY_SERVICE_ID }} # p.ej. srv_efgh5678
+      RAILWAY_PROJECT:    ${{ secrets.RAILWAY_PROJECT }}
+      RAILWAY_SERVICE_ID: ${{ secrets.RAILWAY_SERVICE_ID }}
     steps:
       - uses: actions/checkout@v3
 
@@ -43,7 +43,4 @@ jobs:
 
       - name: Deploy to Railway
         run: |
-          railway up \
-            --project $RAILWAY_PROJECT \
-            --service $RAILWAY_SERVICE_ID \
-            --detach
+          railway up -- --project $RAILWAY_PROJECT --service $RAILWAY_SERVICE_ID --detach
