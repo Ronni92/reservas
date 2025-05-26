@@ -2,8 +2,7 @@ name: Deploy to DockerHub and Railway
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
 
 jobs:
   dockerhub:
@@ -21,7 +20,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and Push Docker image
+      - name: Build & Push image
         uses: docker/build-push-action@v5
         with:
           context: .
@@ -33,17 +32,18 @@ jobs:
     needs: dockerhub
     runs-on: ubuntu-latest
     env:
-      RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-      RAILWAY_SERVICE_ID: ${{ secrets.RAILWAY_SERVICE_ID }}
-      RAILWAY_PROJECT: ${{ secrets.RAILWAY_PROJECT }} # Este también lo necesitas
+      RAILWAY_TOKEN:      ${{ secrets.RAILWAY_TOKEN }}
+      RAILWAY_PROJECT:    ${{ secrets.RAILWAY_PROJECT }}    # p.ej. project_abcd1234
+      RAILWAY_SERVICE_ID: ${{ secrets.RAILWAY_SERVICE_ID }} # p.ej. srv_efgh5678
     steps:
       - uses: actions/checkout@v3
 
       - name: Install Railway CLI
         run: npm install -g @railway/cli@3.14.0
 
-      - name: Link Railway Project
-        run: railway link $RAILWAY_PROJECT
-
       - name: Deploy to Railway
-        run: railway up --service $RAILWAY_SERVICE_ID --detach
+        run: |
+          railway up \
+            --project $RAILWAY_PROJECT \
+            --service $RAILWAY_SERVICE_ID \
+            --detach
