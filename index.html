@@ -19,19 +19,52 @@
         <p class="description">Gestión inteligente de citas</p>
       </div>
 
-      <form class="form">
-        <input placeholder="Nombre del cliente" class="input" />
-        <input type="date" class="input" />
-        <input type="time" class="input" />
-        <button type="button" class="button">
+      <form class="form" id="reserva-form">
+        <input id="nombre" placeholder="Nombre del cliente" class="input" />
+        <input type="date" id="fecha" class="input" />
+        <input type="time" id="hora" class="input" />
+        <button type="button" class="button" id="crear-btn">
           ➕ Crear Reserva
         </button>
       </form>
 
       <div class="reservations">
         <h2 class="reservations-title">📋 Reservas Registradas</h2>
-        <p class="reservations-empty">No hay reservas registradas.</p>
+        <p class="reservations-empty" id="sin-reservas">No hay reservas registradas.</p>
+        <ul id="lista-reservas" class="mt-2 space-y-2"></ul>
       </div>
     </div>
+
+    <script>
+      document.getElementById("crear-btn").addEventListener("click", () => {
+        const nombre = document.getElementById("nombre").value.trim();
+        const fecha = document.getElementById("fecha").value;
+        const hora = document.getElementById("hora").value;
+
+        if (!nombre || !fecha || !hora) {
+          alert("Por favor completa todos los campos.");
+          return;
+        }
+
+        // Ocultar mensaje "No hay reservas"
+        const sinReservas = document.getElementById("sin-reservas");
+        if (sinReservas) {
+          sinReservas.style.display = "none";
+        }
+
+        // Crear nueva reserva
+        const reservaItem = document.createElement("li");
+        reservaItem.className = "text-sm text-white bg-gray-700 p-2 rounded";
+        reservaItem.textContent = `${nombre} — ${fecha} a las ${hora}`;
+
+        // Insertar en la lista
+        document.getElementById("lista-reservas").appendChild(reservaItem);
+
+        // Limpiar campos
+        document.getElementById("nombre").value = "";
+        document.getElementById("fecha").value = "";
+        document.getElementById("hora").value = "";
+      });
+    </script>
   </body>
 </html>
