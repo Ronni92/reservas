@@ -2,15 +2,15 @@ name: Deploy to DockerHub and Railway
 
 on:
   push:
-    branches: [ main ]  # Puedes cambiar a otra rama si usas 'dev' o 'staging'
+    branches: [ main ]
 
 jobs:
   deploy:
-    name: Build & Push to Docker Hub + Trigger Railway
+    name: Build & Push to Docker Hub + Redeploy on Railway
     runs-on: ubuntu-latest
 
     steps:
-      # Paso 1: Clona el repositorio
+      # Paso 1: Clona el código
       - uses: actions/checkout@v3
 
       # Paso 2: Configura Docker Buildx
@@ -24,7 +24,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      # Paso 4: Construye y sube la imagen
+      # Paso 4: Build + Push a Docker Hub
       - name: Build & Push Docker image
         uses: docker/build-push-action@v5
         with:
@@ -33,7 +33,7 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/reservaplus:latest
 
-      # Paso 5: Redeploy en Railway usando la imagen de Docker Hub
+      # Paso 5: Redeploy en Railway (usando imagen de Docker Hub)
       - name: Redeploy on Railway
         run: |
           curl -X POST https://backboard.railway.app/graphql \
