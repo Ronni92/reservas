@@ -16,7 +16,7 @@
         <h1 class="title">
           <span class="highlight">Reserva</span><span class="subtitle">Plus</span>
         </h1>
-        <p class="description">Gestión de citas </p>
+        <p class="description">Gestión de citas</p>
       </div>
 
       <form class="form" id="reserva-form">
@@ -36,6 +36,35 @@
     </div>
 
     <script>
+      const lista = document.getElementById("lista-reservas");
+      const sinReservas = document.getElementById("sin-reservas");
+
+      // Función para guardar las reservas en localStorage
+      function guardarReserva(nombre, fecha, hora) {
+        const reserva = { nombre, fecha, hora };
+        const reservas = JSON.parse(localStorage.getItem("reservas")) || [];
+        reservas.push(reserva);
+        localStorage.setItem("reservas", JSON.stringify(reservas));
+      }
+
+      // Función para mostrar una reserva en la lista
+      function mostrarReserva({ nombre, fecha, hora }) {
+        const item = document.createElement("li");
+        item.className = "text-sm text-white bg-gray-700 p-2 rounded";
+        item.textContent = `${nombre} — ${fecha} a las ${hora}`;
+        lista.appendChild(item);
+      }
+
+      // Cargar reservas guardadas al iniciar
+      window.addEventListener("DOMContentLoaded", () => {
+        const reservas = JSON.parse(localStorage.getItem("reservas")) || [];
+        if (reservas.length > 0) {
+          sinReservas.style.display = "none";
+          reservas.forEach(mostrarReserva);
+        }
+      });
+
+      // Crear nueva reserva
       document.getElementById("crear-btn").addEventListener("click", () => {
         const nombre = document.getElementById("nombre").value.trim();
         const fecha = document.getElementById("fecha").value;
@@ -46,21 +75,12 @@
           return;
         }
 
-        // Ocultar mensaje "No hay reservas"
-        const sinReservas = document.getElementById("sin-reservas");
-        if (sinReservas) {
-          sinReservas.style.display = "none";
-        }
+        sinReservas.style.display = "none";
 
-        // Crear nueva reserva
-        const reservaItem = document.createElement("li");
-        reservaItem.className = "text-sm text-white bg-gray-700 p-2 rounded";
-        reservaItem.textContent = `${nombre} — ${fecha} a las ${hora}`;
+        const nuevaReserva = { nombre, fecha, hora };
+        mostrarReserva(nuevaReserva);
+        guardarReserva(nombre, fecha, hora);
 
-        // Insertar en la lista
-        document.getElementById("lista-reservas").appendChild(reservaItem);
-
-        // Limpiar campos
         document.getElementById("nombre").value = "";
         document.getElementById("fecha").value = "";
         document.getElementById("hora").value = "";
